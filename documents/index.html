@@ -12,12 +12,10 @@
 <body>
 
 <h1>Secure PDF Viewer</h1>
-<div id="content">
-  <!-- Dynamic content goes here -->
-</div>
+<div id="content"></div>
 
 <script>
-  // Utility: SHA256 hash a string and return hex digest
+  // SHA256 hashing function
   async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -26,27 +24,28 @@
     return hashHex;
   }
 
+  // Validate key by calling your API
   async function validateKey(fileName, key) {
     const concat = fileName + key;
     const hash = await sha256(concat);
-  
+
     try {
       const response = await fetch(`https://pdf-key-generator.amihnea2.workers.dev/?publicKey=${encodeURIComponent(hash)}`);
       if (!response.ok) throw new Error('API request failed');
-  
+
       const data = await response.json();
-  
+
       if (data.valid && data.secretKey) {
-        return { success: true, link: data.secretKey };  // use secretKey as the embed link
+        return { success: true, link: data.secretKey };
       } else {
         return { success: false, message: 'Invalid key or no link returned.' };
       }
     } catch (error) {
       return { success: false, message: 'Error contacting the key validation API.' };
     }
-}
+  }
 
-
+  // Show prompt to enter key
   function renderPrompt(fileName) {
     const contentDiv = document.getElementById('content');
     contentDiv.innerHTML = `
@@ -66,7 +65,7 @@
       const result = await validateKey(fileName, key);
       if (result.success) {
         renderViewer(result.link);
-        // Update URL with key param (plain text key, can be hashed client-side if you want)
+        // Update URL with key param for reloads
         history.replaceState(null, '', `?file=${encodeURIComponent(fileName)}&key=${encodeURIComponent(key)}`);
       } else {
         document.getElementById('error').textContent = result.message;
@@ -74,10 +73,11 @@
     });
   }
 
-  function renderViewer(driveLink) {
+  // Show the embedded Google Drive PDF viewer
+  function renderViewer(link) {
     const contentDiv = document.getElementById('content');
     contentDiv.innerHTML = `
-      <iframe id="viewer" src="${driveLink}" allowfullscreen></iframe>
+      <iframe id="viewer" src="${link}" allowfullscreen></iframe>
     `;
   }
 
