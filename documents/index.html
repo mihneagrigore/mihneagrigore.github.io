@@ -28,6 +28,7 @@
   async function validateKey(fileName, key) {
     const concat = fileName + key;
     const hash = await sha256(concat);
+    <p>${hash}</p>
 
     try {
       const response = await fetch(`https://pdf-key-generator.amihnea2.workers.dev/?publicKey=${encodeURIComponent(hash)}`);
