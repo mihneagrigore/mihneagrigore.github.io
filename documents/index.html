@@ -27,25 +27,25 @@
   }
 
   async function validateKey(fileName, key) {
-    // Concatenate file name + key and SHA256 it
     const concat = fileName + key;
     const hash = await sha256(concat);
-
+  
     try {
       const response = await fetch(`https://pdf-key-generator.amihnea2.workers.dev/?publicKey=${encodeURIComponent(hash)}`);
       if (!response.ok) throw new Error('API request failed');
-
+  
       const data = await response.json();
-
-      if (data.valid && data.driveLink) {
-        return { success: true, link: data.driveLink };
+  
+      if (data.valid && data.secretKey) {
+        return { success: true, link: data.secretKey };  // use secretKey as the embed link
       } else {
         return { success: false, message: 'Invalid key or no link returned.' };
       }
     } catch (error) {
       return { success: false, message: 'Error contacting the key validation API.' };
     }
-  }
+}
+
 
   function renderPrompt(fileName) {
     const contentDiv = document.getElementById('content');
