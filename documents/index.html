@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PDF Viewer</title>
+</head>
+<body>
+<h1>PDF Viewer</h1>
+<embed id="pdfViewer" src="" type="application/pdf" width="100%" height="600px" />
+
+<script>
+  // Function to get query parameter from URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Get the doc parameter
+  let docName = getQueryParam('doc');
+  
+  if (!docName) {
+    // fallback or show message
+    document.body.innerHTML = "<p>No document specified.</p>";
+  } else {
+    // Set embed src to the document
+    document.getElementById('pdfViewer').src = docName;
+  }
+</script>
+</body>
+</html>
