@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Secure PDF Viewer with Hash Display</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    #viewer { width: 100%; height: 80vh; border: none; }
+    #error { color: red; }
+    #hashDisplay { font-family: monospace; margin-top: 1rem; color: #555; }
+  </style>
+</head>
+<body>
+
+<h1>Secure PDF Viewer</h1>
+<div id="content"></div>
+
+<script>
+  async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  }
+
+  async function validateKey(fileName, key) {
+    const concat = fileName + key;
+    const hash = await sha256(concat);
+
+    // Show the hash on the page
+    const hashDisplay = document.getElementById('hashDisplay');
+    if (hashDisplay) {
+      hashDisplay.textContent = `SHA256 Hash (file+key): ${hash}`;
+    }
+
+    try {
+      const response = await fetch(`https://pdf-key-generator.amihnea2.workers.dev/?publicKey=${encodeURIComponent(hash)}`);
+      if (!response.ok) throw new Error('API request failed');
+
+      const data = await response.json();
+
+      if (data.valid && data.secretKey) {
+        return { success: true, link: data.secretKey };
+      } else {
+        return { success: false, message: 'Invalid key or no link returned.' };
+      }
+    } catch (error) {
+      return { success: false, message: 'Error contacting the key validation API.' };
+    }
+  }
+
+  function renderPrompt(fileName) {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+      <p>Please enter your key to access <strong>${fileName}</strong>:</p>
+      <input type="password" id="keyInput" placeholder="Enter your key" />
+      <button id="submitKey">Submit</button>
+      <p id="error"></p>
+      <p id="hashDisplay"></p>  <!-- hash will be shown here -->
+    `;
+
+    document.getElementById('submitKey').addEventListener('click', async () => {
+      const key = document.getElementById('keyInput').value.trim();
+      if (!key) {
+        document.getElementById('error').textContent = 'Key cannot be empty.';
+        return;
+      }
+      document.getElementById('error').textContent = 'Validating...';
+      const result = await validateKey(fileName, key);
+      if (result.success) {
+        renderViewer(result.link);
+        history.replaceState(null, '', `?file=${encodeURIComponent(fileName)}&key=${encodeURIComponent(key)}`);
+      } else {
+        document.getElementById('error').textContent = result.message;
+      }
+    });
+  }
+
+  function renderViewer(link) {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+      <iframe id="viewer" src="${link}" allowfullscreen></iframe>
+    `;
+  }
+
+  async function main() {
+    const params = new URLSearchParams(window.location.search);
+    const fileName = params.get('file');
+    const key = params.get('key');
+
+    if (!fileName) {
+      document.getElementById('content').innerHTML = '<p>No file specified in the URL.</p>';
+      return;
+    }
+
+    if (!key) {
+      renderPrompt(fileName);
+    } else {
+      const contentDiv = document.getElementById('content');
+      contentDiv.innerHTML = `<p>Validating key, please wait...</p><p id="hashDisplay"></p>`;
+      const result = await validateKey(fileName, key);
+      if (result.success) {
+        renderViewer(result.link);
+      } else {
+        renderPrompt(fileName);
+        document.getElementById('error').textContent = result.message;
+      }
+    }
+  }
+
+  main();
+</script>
+
+</body>
+</html>
