@@ -22,8 +22,16 @@
     // fallback or show message
     document.body.innerHTML = "<p>No document specified.</p>";
   } else {
-    // Set embed src to the document
-    document.getElementById('pdfViewer').src = docName;
+    // Check if the file can be directly opened, else use Google Docs viewer as fallback
+    const fileExtension = docName.split('.').pop().toLowerCase();
+    
+    if (fileExtension === 'pdf') {
+      // Direct PDF embedding
+      document.getElementById('pdfViewer').src = docName;
+    } else {
+      // Use Google Docs viewer for other file types
+      document.getElementById('pdfViewer').src = `https://docs.google.com/gview?url=${docName}&embedded=true`;
+    }
   }
 </script>
 </body>
