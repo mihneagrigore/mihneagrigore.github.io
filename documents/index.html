@@ -19,18 +19,15 @@
   let docName = getQueryParam('doc');
   
   if (!docName) {
-    // fallback or show message
+    // Show message if no document is specified
     document.body.innerHTML = "<p>No document specified.</p>";
   } else {
-    // Check if the file can be directly opened, else use Google Docs viewer as fallback
-    const fileExtension = docName.split('.').pop().toLowerCase();
-    
-    if (fileExtension === 'pdf') {
-      // Direct PDF embedding
+    // Ensure the document is a valid PDF file
+    if (docName.endsWith('.pdf')) {
+      // Set the embed src to the document
       document.getElementById('pdfViewer').src = docName;
     } else {
-      // Use Google Docs viewer for other file types
-      document.getElementById('pdfViewer').src = `https://docs.google.com/gview?url=${docName}&embedded=true`;
+      document.body.innerHTML = "<p>Invalid file type. Please provide a PDF document.</p>";
     }
   }
 </script>
