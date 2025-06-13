@@ -9,27 +9,19 @@
 <embed id="pdfViewer" src="" type="application/pdf" width="100%" height="600px" />
 
 <script>
-  // Function to get query parameter from URL
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
-
-  // Get the doc parameter
   let docName = getQueryParam('doc');
   
   if (!docName) {
-    // Show message if no document is specified
     document.body.innerHTML = "<p>No document specified.</p>";
   } else {
-    // Ensure the document is a valid PDF file
     if (docName.endsWith('.pdf')) {
-      // Set the embed src to the document
       document.getElementById('pdfViewer').src = docName;
     } else {
-      document.body.innerHTML = "<p>Invalid file type. Please provide a PDF document.</p>";
+      // Use Google Docs Viewer as a fallback
+      document.getElementById('pdfViewer').src = `https://docs.google.com/gview?url=${encodeURIComponent(docName)}&embedded=true`;
     }
   }
 </script>
+
 </body>
 </html>
