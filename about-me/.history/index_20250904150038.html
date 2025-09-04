@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me - Mihnea Andrei Grigore</title>
+  <style>
+    /* ----------- BASE STYLES ----------- */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #eceff1, #fafafa);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #222, #444);
+      color: #fff;
+      padding: 30px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      animation: slideDown 1s ease;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+
+    header button {
+      margin-top: 15px;
+      background: #ff9800;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    header button:hover {
+      transform: scale(1.05);
+      background: #ffb74d;
+    }
+
+    section {
+      padding: 30px;
+      background: #fff;
+      margin: 20px auto;
+      max-width: 900px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    section:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    section:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+
+    h2 {
+      color: #444;
+      border-left: 5px solid #ff9800;
+      padding-left: 10px;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 8px 0;
+      padding: 8px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    li:hover {
+      background: #ffe0b2;
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ----------- ANIMATIONS ----------- */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="name">Mihnea - Andrei Grigore</h1>
+    <button id="lang-btn">English</button>
+  </header>
+
+  <section>
+    <h2 data-ro="Despre mine" data-en="About me">Despre mine</h2>
+    <p data-ro="Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică."
+       data-en="I am a 2nd year student at the Faculty of Automatic Control and Computer Science, passionate about web development, algorithms, and technological innovation.">
+       Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-ro="Experiență profesională" data-en="Work Experience">Experiență profesională</h2>
+    <ul>
+      <li data-ro="<strong>Web Developer</strong> la Maxwell NGO Romania (2023 - prezent)"
+          data-en="<strong>Web Developer</strong> at Maxwell NGO Romania (2023 - present)">
+          <strong>Web Developer</strong> la Maxwell NGO Romania (2023 - prezent)
+      </li>
+      <li data-ro="<strong>Web Developer</strong> la Thermal Coat Continental SRL, București (2022 - 2023)"
+          data-en="<strong>Web Developer</strong> at Thermal Coat Continental SRL, Bucharest (2022 - 2023)">
+          <strong>Web Developer</strong> la Thermal Coat Continental SRL, București (2022 - 2023)
+      </li>
+      <li data-ro="<strong>Team Leader</strong> la Zenith Robotics Club (2022 - prezent)"
+          data-en="<strong>Team Leader</strong> at Zenith Robotics Club (2022 - present)">
+          <strong>Team Leader</strong> la Zenith Robotics Club (2022 - prezent)
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Educație și formare" data-en="Education and Training">Educație și formare</h2>
+    <ul>
+      <li data-ro="Licență în Informatică - UPB (2024 - prezent)"
+          data-en="Bachelor's Degree in Computer Science - UPB (2024 - present)">
+          Licență în Informatică - UPB (2024 - prezent)
+      </li>
+      <li data-ro="Bacalaureat - Colegiul Național Grigore Moisil (2020 - 2024)"
+          data-en="Baccalaureate Diploma - Grigore Moisil National College (2020 - 2024)">
+          Bacalaureat - Colegiul Național Grigore Moisil (2020 - 2024)
+      </li>
+      <li data-ro="Machine Learning & AI Summer School (2025)"
+          data-en="Machine Learning & AI Summer School (2025)">
+          Machine Learning & AI Summer School (2025)
+      </li>
+      <li data-ro="Training - Quantum Computing (2025)"
+          data-en="Training - Quantum Computing (2025)">
+          Training - Quantum Computing (2025)
+      </li>
+      <li data-ro="Database Programming with SQL - Oracle (2023-2024)"
+          data-en="Database Programming with SQL - Oracle (2023-2024)">
+          Database Programming with SQL - Oracle (2023-2024)
+      </li>
+      <li data-ro="ECDL Certificate (2022)" data-en="ECDL Certificate (2022)">ECDL Certificate (2022)</li>
+      <li data-ro="Basic Computer Science - Code.org (2019-2020)"
+          data-en="Basic Computer Science - Code.org (2019-2020)">
+          Basic Computer Science - Code.org (2019-2020)
+      </li>
+      <li data-ro="Online marketing fundamentals - Google (2019-2020)"
+          data-en="Online marketing fundamentals - Google (2019-2020)">
+          Online marketing fundamentals - Google (2019-2020)
+      </li>
+      <li data-ro="IC3 Spark Certification (2017-2018)"
+          data-en="IC3 Spark Certification (2017-2018)">
+          IC3 Spark Certification (2017-2018)
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Concursuri și premii" data-en="Contests and Awards">Concursuri și premii</h2>
+    <ul>
+      <li data-ro="Olimpiada Națională de Creativitate Științifică (ONCS) - Mențiune și medalie de argint (2024)"
+          data-en="National Scientific Creativity Olympiad (ONCS) - Honorable mention and silver medal (2024)">
+          Olimpiada Națională de Creativitate Științifică (ONCS) - Mențiune și medalie de argint (2024)
+      </li>
+      <li data-ro="Olimpiada Națională de Informatică - Participare anuală cu premii și mențiuni (2016-2024)"
+          data-en="National Informatics Olympiad - Annual participation with prizes and mentions (2016-2024)">
+          Olimpiada Națională de Informatică - Participare anuală cu premii și mențiuni (2016-2024)
+      </li>
+      <li data-ro="Hackathon Facultatea IMST, București - Mențiuni și medalii (2023-2024)"
+          data-en="Hackathon, Faculty of Mechanical Engineering, Bucharest - Mentions and medals (2023-2024)">
+          Hackathon Facultatea IMST, București - Mențiuni și medalii (2023-2024)
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Competențe" data-en="Skills">Competențe</h2>
+    <p data-ro="C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office."
+       data-en="C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office.">
+       C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-ro="Limbi străine" data-en="Languages">Limbi străine</h2>
+    <ul>
+      <li data-ro="Engleză: C1" data-en="English: C1">Engleză: C1</li>
+      <li data-ro="Franceză: A2" data-en="French: A2">Franceză: A2</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Proiecte" data-en="Projects">Proiecte</h2>
+    <ul>
+      <li data-ro="Digital Youth Work for Social Inclusion (Erasmus Training, 2024)"
+          data-en="Digital Youth Work for Social Inclusion (Erasmus Training, 2024)">
+          Digital Youth Work for Social Inclusion (Erasmus Training, 2024)
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Voluntariat" data-en="Volunteering">Voluntariat</h2>
+    <ul>
+      <li data-ro="Manager departament IT - CMEB București (2023-2024)"
+          data-en="IT Department Manager - CMEB Bucharest (2023-2024)">
+          Manager departament IT - CMEB București (2023-2024)
+      </li>
+      <li data-ro="Voluntar - Asociația Elevilor București-Ilfov (2021-2024)"
+          data-en="Volunteer - Bucharest-Ilfov Students' Association (2021-2024)">
+          Voluntar - Asociația Elevilor București-Ilfov (2021-2024)
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-ro="Contact" data-en="Contact">Contact</h2>
+    <p>Email: <a href="mailto:amihnea2@gmail.com">amihnea2@gmail.com</a></p>
+    <p>Email: <a href="mailto:mihnea.grigore2106@stud.acs.upb.ro">mihnea.grigore2106@stud.acs.upb.ro</a></p>
+    <p>GitHub: <a href="https://github.com/mihneagrigore" target="_blank">github.com/mihneagrigore</a></p>
+    <p data-ro="Telefon: (+40) 746626422" data-en="Phone: (+40) 746626422">Telefon: (+40) 746626422</p>
+  </section>
+
+  <script>
+    const button = document.getElementById("lang-btn");
+    let currentLang = "ro";
+
+    button.addEventListener("click", () => {
+      const elements = document.querySelectorAll("[data-ro]");
+      elements.forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${currentLang === "ro" ? "en" : "ro"}`);
+      });
+      currentLang = currentLang === "ro" ? "en" : "ro";
+      button.textContent = currentLang === "ro" ? "English" : "Română";
+    });
+  </script>
+</body>
+</html>
