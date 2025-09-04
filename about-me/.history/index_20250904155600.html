@@ -8,48 +8,36 @@
     /* ----------- BASE ----------- */
     :root { --brand:#ff9800; }
     html,body { height:100%; }
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  background: #fff;  /* schimbat din gradient în alb */
-  color: #333;
-  line-height: 1.6;
-}
-
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #eceff1, #fafafa);
+      color: #333;
+      line-height: 1.6;
+    }
 header {
-  background: #000000;
-  color: #ffffff;
-  padding: 20px 16px;
+  background: linear-gradient(90deg, #222, #444);
+  color: #fff;
+  padding: 30px 16px;
   display: flex;
-  justify-content: space-between; /* titlu + poza în stânga, buton în dreapta */
+  justify-content: flex-end; /* butonul rămâne în dreapta */
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px; /* spațiu între poza și titlu */
-}
-
-.profile-pic {
-  width: 80px;            /* lățime fixă */
-  height: 80px;           /* înălțime fixă => pătrat perfect */
-  border-radius: 50%;     /* cerc perfect */
-  object-fit: cover;      /* imaginea se scalează și se taie pentru a umple cercul */
-  border: 2px solid var(--brand);
-  display: block;
+  animation: slideDown 0.8s ease;
+  text-align: center;
+  position: relative;  /* pentru h1 absolut */
 }
 
 header h1 {
+  position: absolute;  /* centru absolut */
+  left: 50%;
+  transform: translateX(-50%);
   margin: 0;
   font-size: 2.2rem;
   letter-spacing: 1px;
 }
-
 
 header button {
   margin-top: 0;
@@ -60,8 +48,8 @@ header button {
   font-weight: 600;
   border-radius: 10px;
   transition: transform .2s, background .2s;
-  margin-right: 20px; /* Adăugat: mută butonul puțin spre centru */
 }
+
 
     header button:hover { transform: translateY(-1px) scale(1.02); background:#ffad33; }
 
@@ -89,21 +77,17 @@ header button {
 
     ul { list-style: none; padding: 0; margin: 0; }
     li {
-    margin: 8px 0;
-    padding: 10px 12px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    transition: transform .2s, background .2s, box-shadow .2s; /* adăugat box-shadow */
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* ca la skills-box */
+      margin: 8px 0; padding: 10px 12px;
+      background: #f9f9f9; border-radius: 8px;
+      transition: background .2s, transform .1s;
     }
+    li[data-key] { cursor: pointer; }
+    li:hover { background: #ffe7c4; }
+    li[data-key]:active { transform: scale(.995); }
 
-    li:hover {
-    background: #ffe7c4;
-    transform: scale(1.02); /* zoom ca la skills-box */
-    box-shadow: 0 6px 14px rgba(0,0,0,0.1); /* shadow mai accentuat la hover */
-    }
-
+    p { margin: 10px 0; }
+    a { color:#0b73c7; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
 
     /* ----------- POPUP ----------- */
     .popup-overlay {
@@ -139,22 +123,6 @@ header button {
     .popup .close-btn:hover { background:#eaeaea; }
     .popup section { box-shadow:none; padding:0; margin:14px 0 0; }
 
-    .skills-box {
-        background: #f9f9f9;
-        padding: 12px 16px;
-        border-radius: 8px;
-        transition: transform .2s, background .2s, box-shadow .2s;
-        cursor: default;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-
-        .skills-box:hover {
-        background: #ffe7c4;
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-        }
-
-
     /* ----------- ANIMS ----------- */
     @keyframes slideDown { from{ transform:translateY(-100%);} to{ transform:translateY(0);} }
     @keyframes fadeInUp { from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);} }
@@ -167,26 +135,17 @@ header button {
 </head>
 <body>
   <header>
-  <div class="header-left">
-    <img src="https://i.ibb.co/PZz94Fc0/Profile-picture.jpg" alt="Profil" class="profile-pic">
     <h1 id="name">Mihnea - Andrei Grigore</h1>
-  </div>
-  <button id="lang-btn" aria-label="Schimbă limba">English</button>
-</header>
-
+    <button id="lang-btn" aria-label="Schimbă limba">English</button>
+  </header>
 
   <section>
-  <h2 data-ro="Despre mine" data-en="About me">Despre mine</h2>
-  <p data-ro="Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică. În timpul studiilor am acumulat experiență practică în proiecte de programare și dezvoltare software, colaborând cu organizații non-guvernamentale și companii private. Sunt interesat de tehnologii noi precum inteligența artificială, machine learning și quantum computing."
-     data-en="I am a second-year student at the Faculty of Automatic Control and Computer Science, with a strong passion for web development, algorithms, and technological innovation. Throughout my studies, I have gained practical experience in programming and software development projects, collaborating with NGOs and private companies. I am particularly interested in emerging technologies such as artificial intelligence, machine learning, and quantum computing.">
-     Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică. În timpul studiilor am acumulat experiență practică în proiecte de programare și dezvoltare software, colaborând cu organizații non-guvernamentale și companii private. Sunt interesat de tehnologii noi precum inteligența artificială, machine learning și quantum computing.
-  </p>
-  <p>
-    <a href="https://mihneagrigore.github.io/documents/CV2025.pdf" target="_blank" data-ro="Vezi CV-ul complet" data-en="View my full CV">Here</a>
-  </p>
-</section>
-
-
+    <h2 data-ro="Despre mine" data-en="About me">Despre mine</h2>
+    <p data-ro="Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică."
+       data-en="I am a 2nd year student at the Faculty of Automatic Control and Computer Science, passionate about web development, algorithms, and technological innovation.">
+       Sunt student în anul 2 la Facultatea de Automatică și Calculatoare, pasionat de dezvoltare web, algoritmi și inovație tehnologică.
+    </p>
+  </section>
 
   <!-- EXPERIENȚĂ -->
   <section>
@@ -315,30 +274,28 @@ header button {
 
   <!-- COMPETENȚE / LIMBI / CONTACT (fără popup) -->
   <section>
-  <h2 data-ro="Competențe" data-en="Skills">Competențe</h2>
-  <div class="skills-box" data-ro="C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office."
+    <h2 data-ro="Competențe" data-en="Skills">Competențe</h2>
+    <p data-ro="C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office."
        data-en="C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, WordPress, Microsoft Office.">
        C/C++, Python, SQL, HTML/CSS/JS, PHP, Laravel, Linux, Git/GitHub, Wordpress, Microsoft Office.
-  </div>
-</section>
-
+    </p>
+  </section>
 
   <section>
     <h2 data-ro="Limbi străine" data-en="Languages">Limbi străine</h2>
     <ul>
       <li data-ro="Engleză: C1" data-en="English: C1">Engleză: C1</li>
-      <li data-ro="Franceză: A2" data-en="French: B1">Franceză: A2</li>
+      <li data-ro="Franceză: A2" data-en="French: A2">Franceză: A2</li>
     </ul>
   </section>
 
   <section>
     <h2 data-ro="Contact" data-en="Contact">Contact</h2>
-    <p>Personal e-mail: <a href="mailto:amihnea2@gmail.com">amihnea2@gmail.com</a></p>
-    <p>Universitary e-mail: <a href="mailto:mihnea.grigore2106@stud.acs.upb.ro">mihnea.grigore2106@stud.acs.upb.ro</a></p>
+    <p>Email: <a href="mailto:amihnea2@gmail.com">amihnea2@gmail.com</a></p>
+    <p>Email: <a href="mailto:mihnea.grigore2106@stud.acs.upb.ro">mihnea.grigore2106@stud.acs.upb.ro</a></p>
+    <p>GitHub: <a href="https://github.com/mihneagrigore" target="_blank">github.com/mihneagrigore</a></p>
     <p data-ro="Telefon: (+40) 746626422" data-en="Phone: (+40) 746626422">Telefon: (+40) 746626422</p>
-    <p>GitHub: <a href="https://github.com/mihneagrigore?tab=repositories" target="_blank">github.com/mihneagrigore</a></p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/mihneagrigore/" target="_blank">linkedin.com/in/mihneagrigore/</a></p>
-</section>
+  </section>
 
   <!-- MODAL -->
   <div id="popup-overlay" class="popup-overlay" aria-hidden="true">
@@ -527,7 +484,7 @@ header button {
 
     /* ====== INITIALIZE ====== */
     // ensure all data-ro elements show the right language on first render
-    applyLanguage("en");
+    applyLanguage("ro");
   </script>
 </body>
 </html>
