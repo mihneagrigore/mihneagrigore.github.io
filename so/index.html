@@ -1,682 +1,796 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>STACK AND DATA QUIZ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating Systems Quiz</title>
     <style>
-        .question { margin-bottom: 20px; }
-        .result { color: green; }
-        .incorrect { color: red; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .question {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+        .question h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        form label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+        .result {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
     </style>
 </head>
 <body>
-    <h1>STACK AND DATA QUIZ</h1>
+    <div class="container">
+        <h1>Operating Systems Quiz</h1>
 
-    <div class="question">
-        <h2>Question 1: Can a process access the memory of another process?</h2>
-        <form id="q1">
-            <label><input type="radio" name="answer" value="a"> a. Yes, by using shared memory zones.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Yes, by making changes in the physical memory.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Yes, by directly accessing the memory.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. No, there is no such mechanism.</label><br>
-            <button type="button" onclick="checkQ1()">Submit</button>
-        </form>
-        <div id="result1"></div>
-    </div>
-    <script>
-        function checkQ1() {
-            var selected = document.querySelector('#q1 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result1');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The most common way to access memory is through shared memory zones. Our program can use mmap to map virtual memory in a shared manner to share with other processes. The two virtual memory zones are backed up by the same physical frames and this is guaranteed by the OS through the page tables.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: The most common way to access memory is through shared memory zones. Our program can use mmap to map virtual memory in a shared manner to share with other processes. The two virtual memory zones are backed up by the same physical frames and this is guaranteed by the OS through the page tables.';
+        <div class="question">
+            <h2>Question 1: Can a process access the memory of another process?</h2>
+            <form id="q1">
+                <label><input type="radio" name="answer" value="a"> a. Yes, by using shared memory zones.</label>
+                <label><input type="radio" name="answer" value="b"> b. Yes, by making changes in the physical memory.</label>
+                <label><input type="radio" name="answer" value="c"> c. Yes, by directly accessing the memory.</label>
+                <label><input type="radio" name="answer" value="d"> d. No, there is no such mechanism.</label>
+                <button type="button" onclick="checkQ1()">Submit</button>
+            </form>
+            <div id="result1" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ1() {
+                var selected = document.querySelector('#q1 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result1');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The most common way to access memory is through shared memory zones. Our program can use mmap to map virtual memory in a shared manner to share with other processes. The two virtual memory zones are backed up by the same physical frames and this is guaranteed by the OS through the page tables.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: The most common way to access memory is through shared memory zones. Our program can use mmap to map virtual memory in a shared manner to share with other processes. The two virtual memory zones are backed up by the same physical frames and this is guaranteed by the OS through the page tables.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 2: How many malloc system calls are made after calling it 10 times in a loop?</h2>
-        <form id="q2">
-            <label><input type="radio" name="answer" value="a"> a. 1, as they are merged together.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. 10, one for each malloc call.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Somewhere between 1 and 10.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. malloc is not a system call.</label><br>
-            <button type="button" onclick="checkQ2()">Submit</button>
-        </form>
-        <div id="result2"></div>
-    </div>
-    <script>
-        function checkQ2() {
-            var selected = document.querySelector('#q2 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result2');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: malloc is not a system call, it is a library call. After calling malloc, brk and/or mmap is called in turn.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: malloc is not a system call, it is a library call. After calling malloc, brk and/or mmap is called in turn.';
+        <div class="question">
+            <h2>Question 2: How many malloc system calls are made after calling it 10 times in a loop?</h2>
+            <form id="q2">
+                <label><input type="radio" name="answer" value="a"> a. 1, as they are merged together.</label>
+                <label><input type="radio" name="answer" value="b"> b. 10, one for each malloc call.</label>
+                <label><input type="radio" name="answer" value="c"> c. Somewhere between 1 and 10.</label>
+                <label><input type="radio" name="answer" value="d"> d. malloc is not a system call.</label>
+                <button type="button" onclick="checkQ2()">Submit</button>
+            </form>
+            <div id="result2" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ2() {
+                var selected = document.querySelector('#q2 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result2');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: malloc is not a system call, it is a library call. After calling malloc, brk and/or mmap is called in turn.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: malloc is not a system call, it is a library call. After calling malloc, brk and/or mmap is called in turn.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 3: What is the role of the TLB?</h2>
-        <form id="q3">
-            <label><input type="radio" name="answer" value="a"> a. It plays a role similar to the CPU cache.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. It guarantees the existence of pages in memory.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. It is part of the CPU architecture.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. It is part of the HDD.</label><br>
-            <button type="button" onclick="checkQ3()">Submit</button>
-        </form>
-        <div id="result3"></div>
-    </div>
-    <script>
-        function checkQ3() {
-            var selected = document.querySelector('#q3 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result3');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The Translation Look-aside Buffer is similar to the cache in the CPU. It keeps the mappings for the most recently accessed pages in order to improve the memory translation speed.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: The Translation Look-aside Buffer is similar to the cache in the CPU. It keeps the mappings for the most recently accessed pages in order to improve the memory translation speed.';
+        <div class="question">
+            <h2>Question 3: What is the role of the TLB?</h2>
+            <form id="q3">
+                <label><input type="radio" name="answer" value="a"> a. It plays a role similar to the CPU cache.</label>
+                <label><input type="radio" name="answer" value="b"> b. It guarantees the existence of pages in memory.</label>
+                <label><input type="radio" name="answer" value="c"> c. It is part of the CPU architecture.</label>
+                <label><input type="radio" name="answer" value="d"> d. It is part of the HDD.</label>
+                <button type="button" onclick="checkQ3()">Submit</button>
+            </form>
+            <div id="result3" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ3() {
+                var selected = document.querySelector('#q3 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result3');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The Translation Look-aside Buffer is similar to the cache in the CPU. It keeps the mappings for the most recently accessed pages in order to improve the memory translation speed.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: The Translation Look-aside Buffer is similar to the cache in the CPU. It keeps the mappings for the most recently accessed pages in order to improve the memory translation speed.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 4: We want to provide our own implementation of strcpy(). How many syscalls do we need?</h2>
-        <form id="q4">
-            <label><input type="radio" name="answer" value="a"> a. 0</label><br>
-            <label><input type="radio" name="answer" value="b"> b. 1</label><br>
-            <label><input type="radio" name="answer" value="c"> c. at least 1</label><br>
-            <label><input type="radio" name="answer" value="d"> d. 1</label><br>
-            <button type="button" onclick="checkQ4()">Submit</button>
-        </form>
-        <div id="result4"></div>
-    </div>
-    <script>
-        function checkQ4() {
-            var selected = document.querySelector('#q4 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result4');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: No syscall required, considering standard implementations of strcpy().';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: No syscall required, considering standard implementations of strcpy().';
+        <div class="question">
+            <h2>Question 4: We want to provide our own implementation of strcpy(). How many syscalls do we need?</h2>
+            <form id="q4">
+                <label><input type="radio" name="answer" value="a"> a. 0</label>
+                <label><input type="radio" name="answer" value="b"> b. 1</label>
+                <label><input type="radio" name="answer" value="c"> c. at least 1</label>
+                <label><input type="radio" name="answer" value="d"> d. 1</label>
+                <button type="button" onclick="checkQ4()">Submit</button>
+            </form>
+            <div id="result4" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ4() {
+                var selected = document.querySelector('#q4 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result4');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: No syscall required, considering standard implementations of strcpy().</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: No syscall required, considering standard implementations of strcpy().</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 5: You are in charge of developing a C application. Your priority is obtaining a reduced size of the final executable. You will link libc:</h2>
-        <form id="q5">
-            <label><input type="radio" name="answer" value="a"> a. dynamically</label><br>
-            <label><input type="radio" name="answer" value="b"> b. the type of linking doesn\'t have an impact on the final executable size</label><br>
-            <label><input type="radio" name="answer" value="c"> c. statically</label><br>
-            <button type="button" onclick="checkQ5()">Submit</button>
-        </form>
-        <div id="result5"></div>
-    </div>
-    <script>
-        function checkQ5() {
-            var selected = document.querySelector('#q5 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result5');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: Dynamically linked executables do not contain the libc raw binary code. Therefore, the size of a dynamically linked executable is smaller than the size of an executable obtained by statically linking the same program.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: Dynamically linked executables do not contain the libc raw binary code. Therefore, the size of a dynamically linked executable is smaller than the size of an executable obtained by statically linking the same program.';
+        <div class="question">
+            <h2>Question 5: You are in charge of developing a C application. Your priority is obtaining a reduced size of the final executable. You will link libc:</h2>
+            <form id="q5">
+                <label><input type="radio" name="answer" value="a"> a. dynamically</label>
+                <label><input type="radio" name="answer" value="b"> b. the type of linking doesn\'t have an impact on the final executable size</label>
+                <label><input type="radio" name="answer" value="c"> c. statically</label>
+                <button type="button" onclick="checkQ5()">Submit</button>
+            </form>
+            <div id="result5" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ5() {
+                var selected = document.querySelector('#q5 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result5');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: Dynamically linked executables do not contain the libc raw binary code. Therefore, the size of a dynamically linked executable is smaller than the size of an executable obtained by statically linking the same program.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: Dynamically linked executables do not contain the libc raw binary code. Therefore, the size of a dynamically linked executable is smaller than the size of an executable obtained by statically linking the same program.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 6: Choose the correct ordering of software stack levels, from hardware to applications.</h2>
-        <form id="q6">
-            <label><input type="radio" name="answer" value="a"> a. hardware, operating system, system libraries, language environment, support libraries, applications</label><br>
-            <label><input type="radio" name="answer" value="b"> b. hardware, operating system, support libraries, system libraries, language environment, applications</label><br>
-            <label><input type="radio" name="answer" value="c"> c. hardware, system libraries, operating system, language environment, support libraries, applications</label><br>
-            <label><input type="radio" name="answer" value="d"> d. hardware, operating system, system libraries, support libraries, language environment, applications</label><br>
-            <button type="button" onclick="checkQ6()">Submit</button>
-        </form>
-        <div id="result6"></div>
-    </div>
-    <script>
-        function checkQ6() {
-            var selected = document.querySelector('#q6 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result6');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The support libraries are an addition to the programming language environment. A language environment is based on functional libraries provided by system libraries (e.g. libc). System libraries include syscall wrappers. Therefore the correct ordering is hardware, operating system, system libraries, language environment, support libraries, applications.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: The support libraries are an addition to the programming language environment. A language environment is based on functional libraries provided by system libraries (e.g. libc). System libraries include syscall wrappers. Therefore the correct ordering is hardware, operating system, system libraries, language environment, support libraries, applications.';
+        <div class="question">
+            <h2>Question 6: Choose the correct ordering of software stack levels, from hardware to applications.</h2>
+            <form id="q6">
+                <label><input type="radio" name="answer" value="a"> a. hardware, operating system, system libraries, language environment, support libraries, applications</label>
+                <label><input type="radio" name="answer" value="b"> b. hardware, operating system, support libraries, system libraries, language environment, applications</label>
+                <label><input type="radio" name="answer" value="c"> c. hardware, system libraries, operating system, language environment, support libraries, applications</label>
+                <label><input type="radio" name="answer" value="d"> d. hardware, operating system, system libraries, support libraries, language environment, applications</label>
+                <button type="button" onclick="checkQ6()">Submit</button>
+            </form>
+            <div id="result6" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ6() {
+                var selected = document.querySelector('#q6 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result6');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The support libraries are an addition to the programming language environment. A language environment is based on functional libraries provided by system libraries (e.g. libc). System libraries include syscall wrappers. Therefore the correct ordering is hardware, operating system, system libraries, language environment, support libraries, applications.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: The support libraries are an addition to the programming language environment. A language environment is based on functional libraries provided by system libraries (e.g. libc). System libraries include syscall wrappers. Therefore the correct ordering is hardware, operating system, system libraries, language environment, support libraries, applications.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 7: You are working on a server-side Python application. The programming language will provide you with the following advantages:</h2>
-        <form id="q7">
-            <label><input type="checkbox" name="answer" value="a"> a. a low temporal overhead</label><br>
-            <label><input type="checkbox" name="answer" value="b"> b. fast development</label><br>
-            <label><input type="checkbox" name="answer" value="c"> c. full flexibility in managing the memory</label><br>
-            <label><input type="checkbox" name="answer" value="d"> d. inherent safety</label><br>
-            <button type="button" onclick="checkQ7()">Submit</button>
-        </form>
-        <div id="result7"></div>
-    </div>
-    <script>
-        function checkQ7() {
-            var checked = Array.from(document.querySelectorAll('#q7 input[name="answer"]:checked')).map(cb => cb.value);
-            checked.sort();
-            var correct = ['b', 'd'];
-            var resultDiv = document.getElementById('result7');
-            if (checked.join(',') === correct.join(',')) {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: Python offers automatic management for allocating / freeing memory. It is inherently safer than a low-level language (e.g. C), but less flexible. The high level constructs in Python provide a faster development process. Since Python is an interpreted language, this brings additional temporal overhead when compared to a compiled language (e.g. C++ ). More than that, since the Python language environment is situated in a higher level of the software stack, traveling through the lower levels brings a high temporal overhead when compared to a low-level programming language (e.g. C).';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answers are b and d. Explanation: Python offers automatic management for allocating / freeing memory. It is inherently safer than a low-level language (e.g. C), but less flexible. The high level constructs in Python provide a faster development process. Since Python is an interpreted language, this brings additional temporal overhead when compared to a compiled language (e.g. C++ ). More than that, since the Python language environment is situated in a higher level of the software stack, traveling through the lower levels brings a high temporal overhead when compared to a low-level programming language (e.g. C).';
+        <div class="question">
+            <h2>Question 7: You are working on a server-side Python application. The programming language will provide you with the following advantages:</h2>
+            <form id="q7">
+                <label><input type="checkbox" name="answer" value="a"> a. a low temporal overhead</label>
+                <label><input type="checkbox" name="answer" value="b"> b. fast development</label>
+                <label><input type="checkbox" name="answer" value="c"> c. full flexibility in managing the memory</label>
+                <label><input type="checkbox" name="answer" value="d"> d. inherent safety</label>
+                <button type="button" onclick="checkQ7()">Submit</button>
+            </form>
+            <div id="result7" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ7() {
+                var checked = Array.from(document.querySelectorAll('#q7 input[name="answer"]:checked')).map(cb => cb.value);
+                checked.sort();
+                var correct = ['b', 'd'];
+                var resultDiv = document.getElementById('result7');
+                if (checked.join(',') === correct.join(',')) {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: Python offers automatic management for allocating / freeing memory. It is inherently safer than a low-level language (e.g. C), but less flexible. The high level constructs in Python provide a faster development process. Since Python is an interpreted language, this brings additional temporal overhead when compared to a compiled language (e.g. C++ ). More than that, since the Python language environment is situated in a higher level of the software stack, traveling through the lower levels brings a high temporal overhead when compared to a low-level programming language (e.g. C).</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answers are b and d.<br><div class="explanation">Explanation: Python offers automatic management for allocating / freeing memory. It is inherently safer than a low-level language (e.g. C), but less flexible. The high level constructs in Python provide a faster development process. Since Python is an interpreted language, this brings additional temporal overhead when compared to a compiled language (e.g. C++ ). More than that, since the Python language environment is situated in a higher level of the software stack, traveling through the lower levels brings a high temporal overhead when compared to a low-level programming language (e.g. C).</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 8: Which of the following is a functionality of an operating system?</h2>
-        <form id="q8">
-            <label><input type="radio" name="answer" value="a"> a. Isolation between processes.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Code compilation.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Software package installation.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. String operations.</label><br>
-            <button type="button" onclick="checkQ8()">Submit</button>
-        </form>
-        <div id="result8"></div>
-    </div>
-    <script>
-        function checkQ8() {
-            var selected = document.querySelector('#q8 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result8');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: An operating system provides hardware abstraction, resource management (memory, I/O) and process isolation. The other choices are common functionalities provided by applications that run in user space.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: An operating system provides hardware abstraction, resource management (memory, I/O) and process isolation. The other choices are common functionalities provided by applications that run in user space.';
+        <div class="question">
+            <h2>Question 8: Which of the following is a functionality of an operating system?</h2>
+            <form id="q8">
+                <label><input type="radio" name="answer" value="a"> a. Isolation between processes.</label>
+                <label><input type="radio" name="answer" value="b"> b. Code compilation.</label>
+                <label><input type="radio" name="answer" value="c"> c. Software package installation.</label>
+                <label><input type="radio" name="answer" value="d"> d. String operations.</label>
+                <button type="button" onclick="checkQ8()">Submit</button>
+            </form>
+            <div id="result8" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ8() {
+                var selected = document.querySelector('#q8 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result8');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: An operating system provides hardware abstraction, resource management (memory, I/O) and process isolation. The other choices are common functionalities provided by applications that run in user space.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: An operating system provides hardware abstraction, resource management (memory, I/O) and process isolation. The other choices are common functionalities provided by applications that run in user space.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 9: What is an advantage of using dynamic libraries as opposed to static libraries?</h2>
-        <form id="q9">
-            <label><input type="radio" name="answer" value="a"> a. The code is easier to read.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Portability.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. The code requires fewer function calls.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. The library\'s code is loaded only once in memory.</label><br>
-            <button type="button" onclick="checkQ9()">Submit</button>
-        </form>
-        <div id="result9"></div>
-    </div>
-    <script>
-        function checkQ9() {
-            var selected = document.querySelector('#q9 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result9');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.';
+        <div class="question">
+            <h2>Question 9: What is an advantage of using dynamic libraries as opposed to static libraries?</h2>
+            <form id="q9">
+                <label><input type="radio" name="answer" value="a"> a. The code is easier to read.</label>
+                <label><input type="radio" name="answer" value="b"> b. Portability.</label>
+                <label><input type="radio" name="answer" value="c"> c. The code requires fewer function calls.</label>
+                <label><input type="radio" name="answer" value="d"> d. The library\'s code is loaded only once in memory.</label>
+                <button type="button" onclick="checkQ9()">Submit</button>
+            </form>
+            <div id="result9" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ9() {
+                var selected = document.querySelector('#q9 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result9');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 10: Which of the following runs in kernel mode?</h2>
-        <form id="q10">
-            <label><input type="radio" name="answer" value="a"> a. system daemons.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. the operating system\'s code</label><br>
-            <label><input type="radio" name="answer" value="c"> c. packet managers such as apt.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. user applications.</label><br>
-            <button type="button" onclick="checkQ10()">Submit</button>
-        </form>
-        <div id="result10"></div>
-    </div>
-    <script>
-        function checkQ10() {
-            var selected = document.querySelector('#q10 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result10');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The operating system\'s core is, in fact, the kernel which runs in kernel mode. The other choices are user or system applications that run in user space.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The operating system\'s core is, in fact, the kernel which runs in kernel mode. The other choices are user or system applications that run in user space.';
+        <div class="question">
+            <h2>Question 10: Which of the following runs in kernel mode?</h2>
+            <form id="q10">
+                <label><input type="radio" name="answer" value="a"> a. system daemons.</label>
+                <label><input type="radio" name="answer" value="b"> b. the operating system\'s code</label>
+                <label><input type="radio" name="answer" value="c"> c. packet managers such as apt.</label>
+                <label><input type="radio" name="answer" value="d"> d. user applications.</label>
+                <button type="button" onclick="checkQ10()">Submit</button>
+            </form>
+            <div id="result10" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ10() {
+                var selected = document.querySelector('#q10 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result10');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The operating system\'s core is, in fact, the kernel which runs in kernel mode. The other choices are user or system applications that run in user space.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The operating system\'s core is, in fact, the kernel which runs in kernel mode. The other choices are user or system applications that run in user space.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 11: What information about a process can we obtain using ltrace?</h2>
-        <form id="q11">
-            <label><input type="radio" name="answer" value="a"> a. How many functions it calls.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. If it contains memory leaks.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. What system calls it performs.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. What library calls it performs.</label><br>
-            <button type="button" onclick="checkQ11()">Submit</button>
-        </form>
-        <div id="result11"></div>
-    </div>
-    <script>
-        function checkQ11() {
-            var selected = document.querySelector('#q11 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result11');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: ltrace intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: ltrace intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.';
+        <div class="question">
+            <h2>Question 11: What information about a process can we obtain using ltrace?</h2>
+            <form id="q11">
+                <label><input type="radio" name="answer" value="a"> a. How many functions it calls.</label>
+                <label><input type="radio" name="answer" value="b"> b. If it contains memory leaks.</label>
+                <label><input type="radio" name="answer" value="c"> c. What system calls it performs.</label>
+                <label><input type="radio" name="answer" value="d"> d. What library calls it performs.</label>
+                <button type="button" onclick="checkQ11()">Submit</button>
+            </form>
+            <div id="result11" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ11() {
+                var selected = document.querySelector('#q11 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result11');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: ltrace intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: ltrace intercepts and records the dynamic library calls which are called by the executed process and the signals which are received by that process.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 12: How many times is a dynamic library's code loaded in the system's physical memory?</h2>
-        <form id="q12">
-            <label><input type="radio" name="answer" value="a"> a. once for each application that uses that library.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. 1.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. 0.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. once for each thread that uses that library.</label><br>
-            <button type="button" onclick="checkQ12()">Submit</button>
-        </form>
-        <div id="result12"></div>
-    </div>
-    <script>
-        function checkQ12() {
-            var selected = document.querySelector('#q12 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result12');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.';
+        <div class="question">
+            <h2>Question 12: How many times is a dynamic library's code loaded in the system's physical memory?</h2>
+            <form id="q12">
+                <label><input type="radio" name="answer" value="a"> a. once for each application that uses that library.</label>
+                <label><input type="radio" name="answer" value="b"> b. 1.</label>
+                <label><input type="radio" name="answer" value="c"> c. 0.</label>
+                <label><input type="radio" name="answer" value="d"> d. once for each thread that uses that library.</label>
+                <button type="button" onclick="checkQ12()">Submit</button>
+            </form>
+            <div id="result12" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ12() {
+                var selected = document.querySelector('#q12 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result12');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The dynamic library is loaded into the system memory once, and its code is shared between all the applications that use the library.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 13: What is the difference between an application and a library?</h2>
-        <form id="q13">
-            <label><input type="radio" name="answer" value="a"> a. The application has an entry point, while the library does not.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. The application is a binary file, while the library is a text file.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. The application is reusable, while the library is not.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. The library has an entry point, while the application does not.</label><br>
-            <button type="button" onclick="checkQ13()">Submit</button>
-        </form>
-        <div id="result13"></div>
-    </div>
-    <script>
-        function checkQ13() {
-            var selected = document.querySelector('#q13 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result13');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: Each application must have an entry point (e.g., the _start symbol). In contrast, a library does not need an entry point since it will be linked with an application that has one.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: Each application must have an entry point (e.g., the _start symbol). In contrast, a library does not need an entry point since it will be linked with an application that has one.';
+        <div class="question">
+            <h2>Question 13: What is the difference between an application and a library?</h2>
+            <form id="q13">
+                <label><input type="radio" name="answer" value="a"> a. The application has an entry point, while the library does not.</label>
+                <label><input type="radio" name="answer" value="b"> b. The application is a binary file, while the library is a text file.</label>
+                <label><input type="radio" name="answer" value="c"> c. The application is reusable, while the library is not.</label>
+                <label><input type="radio" name="answer" value="d"> d. The library has an entry point, while the application does not.</label>
+                <button type="button" onclick="checkQ13()">Submit</button>
+            </form>
+            <div id="result13" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ13() {
+                var selected = document.querySelector('#q13 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result13');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: Each application must have an entry point (e.g., the _start symbol). In contrast, a library does not need an entry point since it will be linked with an application that has one.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: Each application must have an entry point (e.g., the _start symbol). In contrast, a library does not need an entry point since it will be linked with an application that has one.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 14: Which of the following is a similarity between a C application and a C library?</h2>
-        <form id="q14">
-            <label><input type="radio" name="answer" value="a"> a. Both use libc.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Both are portable.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Both are binary files.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. Both have an entry point.</label><br>
-            <button type="button" onclick="checkQ14()">Submit</button>
-        </form>
-        <div id="result14"></div>
-    </div>
-    <script>
-        function checkQ14() {
-            var selected = document.querySelector('#q14 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result14');
-            if (selected && selected.value === 'c') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: Both the application and library are compiled, and contain binary executable code.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c. Explanation: Both the application and library are compiled, and contain binary executable code.';
+        <div class="question">
+            <h2>Question 14: Which of the following is a similarity between a C application and a C library?</h2>
+            <form id="q14">
+                <label><input type="radio" name="answer" value="a"> a. Both use libc.</label>
+                <label><input type="radio" name="answer" value="b"> b. Both are portable.</label>
+                <label><input type="radio" name="answer" value="c"> c. Both are binary files.</label>
+                <label><input type="radio" name="answer" value="d"> d. Both have an entry point.</label>
+                <button type="button" onclick="checkQ14()">Submit</button>
+            </form>
+            <div id="result14" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ14() {
+                var selected = document.querySelector('#q14 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result14');
+                if (selected && selected.value === 'c') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: Both the application and library are compiled, and contain binary executable code.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c.<br><div class="explanation">Explanation: Both the application and library are compiled, and contain binary executable code.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 15: How many times is a static library's code loaded into the memory?</h2>
-        <form id="q15">
-            <label><input type="radio" name="answer" value="a"> a. Once for each application that uses that library.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Once for each thread that uses that library.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. 1</label><br>
-            <label><input type="radio" name="answer" value="d"> d. 0</label><br>
-            <button type="button" onclick="checkQ15()">Submit</button>
-        </form>
-        <div id="result15"></div>
-    </div>
-    <script>
-        function checkQ15() {
-            var selected = document.querySelector('#q15 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result15');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: A static library is merged into the application\'s binary and is loaded into memory each time the application is run.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: A static library is merged into the application\'s binary and is loaded into memory each time the application is run.';
+        <div class="question">
+            <h2>Question 15: How many times is a static library's code loaded into the memory?</h2>
+            <form id="q15">
+                <label><input type="radio" name="answer" value="a"> a. Once for each application that uses that library.</label>
+                <label><input type="radio" name="answer" value="b"> b. Once for each thread that uses that library.</label>
+                <label><input type="radio" name="answer" value="c"> c. 1</label>
+                <label><input type="radio" name="answer" value="d"> d. 0</label>
+                <button type="button" onclick="checkQ15()">Submit</button>
+            </form>
+            <div id="result15" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ15() {
+                var selected = document.querySelector('#q15 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result15');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: A static library is merged into the application\'s binary and is loaded into memory each time the application is run.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: A static library is merged into the application\'s binary and is loaded into memory each time the application is run.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 16: How many system calls must be performed by the following code? (Simple memory copy function without I/O)</h2>
-        <form id="q16">
-            <label><input type="radio" name="answer" value="a"> a. len</label><br>
-            <label><input type="radio" name="answer" value="b"> b. len/2</label><br>
-            <label><input type="radio" name="answer" value="c"> c. 0</label><br>
-            <label><input type="radio" name="answer" value="d"> d. 1</label><br>
-            <button type="button" onclick="checkQ16()">Submit</button>
-        </form>
-        <div id="result16"></div>
-    </div>
-    <script>
-        function checkQ16() {
-            var selected = document.querySelector('#q16 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result16');
-            if (selected && selected.value === 'c') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The code simply copies memory within the process memory and does not perform any privileged operations, so no system calls are required.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c. Explanation: The code simply copies memory within the process memory and does not perform any privileged operations, so no system calls are required.';
+        <div class="question">
+            <h2>Question 16: How many system calls must be performed by the following code? (Simple memory copy function without I/O)</h2>
+            <form id="q16">
+                <label><input type="radio" name="answer" value="a"> a. len</label>
+                <label><input type="radio" name="answer" value="b"> b. len/2</label>
+                <label><input type="radio" name="answer" value="c"> c. 0</label>
+                <label><input type="radio" name="answer" value="d"> d. 1</label>
+                <button type="button" onclick="checkQ16()">Submit</button>
+            </form>
+            <div id="result16" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ16() {
+                var selected = document.querySelector('#q16 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result16');
+                if (selected && selected.value === 'c') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The code simply copies memory within the process memory and does not perform any privileged operations, so no system calls are required.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c.<br><div class="explanation">Explanation: The code simply copies memory within the process memory and does not perform any privileged operations, so no system calls are required.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 17: The operating system's kernel does NOT:</h2>
-        <form id="q17">
-            <label><input type="radio" name="answer" value="a"> a. Isolate processes.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Manage access to hardware resources.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Provide a hardware abstraction layer.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. Update system packages.</label><br>
-            <button type="button" onclick="checkQ17()">Submit</button>
-        </form>
-        <div id="result17"></div>
-    </div>
-    <script>
-        function checkQ17() {
-            var selected = document.querySelector('#q17 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result17');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The operating system manages resources and provides a common interface to user applications to improve the system\'s security and application portability. Updating system packages is typically handled by user-space tools like package managers.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: The operating system manages resources and provides a common interface to user applications to improve the system\'s security and application portability. Updating system packages is typically handled by user-space tools like package managers.';
+        <div class="question">
+            <h2>Question 17: The operating system's kernel does NOT:</h2>
+            <form id="q17">
+                <label><input type="radio" name="answer" value="a"> a. Isolate processes.</label>
+                <label><input type="radio" name="answer" value="b"> b. Manage access to hardware resources.</label>
+                <label><input type="radio" name="answer" value="c"> c. Provide a hardware abstraction layer.</label>
+                <label><input type="radio" name="answer" value="d"> d. Update system packages.</label>
+                <button type="button" onclick="checkQ17()">Submit</button>
+            </form>
+            <div id="result17" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ17() {
+                var selected = document.querySelector('#q17 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result17');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The operating system manages resources and provides a common interface to user applications to improve the system\'s security and application portability. Updating system packages is typically handled by user-space tools like package managers.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: The operating system manages resources and provides a common interface to user applications to improve the system\'s security and application portability. Updating system packages is typically handled by user-space tools like package managers.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 18: How many system calls are performed by the following code? for (i = 0; i < N; i++) write(1, "ab", 2);</h2>
-        <form id="q18">
-            <label><input type="radio" name="answer" value="a"> a. N</label><br>
-            <label><input type="radio" name="answer" value="b"> b. 2 * N</label><br>
-            <label><input type="radio" name="answer" value="c"> c. 1</label><br>
-            <label><input type="radio" name="answer" value="d"> d. 0</label><br>
-            <button type="button" onclick="checkQ18()">Submit</button>
-        </form>
-        <div id="result18"></div>
-    </div>
-    <script>
-        function checkQ18() {
-            var selected = document.querySelector('#q18 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result18');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The code above performs a system call each time the write function is called (N times).';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: The code above performs a system call each time the write function is called (N times).';
+        <div class="question">
+            <h2>Question 18: How many system calls are performed by the following code? for (i = 0; i < N; i++) write(1, "ab", 2);</h2>
+            <form id="q18">
+                <label><input type="radio" name="answer" value="a"> a. N</label>
+                <label><input type="radio" name="answer" value="b"> b. 2 * N</label>
+                <label><input type="radio" name="answer" value="c"> c. 1</label>
+                <label><input type="radio" name="answer" value="d"> d. 0</label>
+                <button type="button" onclick="checkQ18()">Submit</button>
+            </form>
+            <div id="result18" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ18() {
+                var selected = document.querySelector('#q18 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result18');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The code above performs a system call each time the write function is called (N times).</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: The code above performs a system call each time the write function is called (N times).</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 19: Which of the following operations is performed in user space?</h2>
-        <form id="q19">
-            <label><input type="radio" name="answer" value="a"> a. Writing a file on disk.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Computing a string\'s length.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Opening a file.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. Swapping out a page.</label><br>
-            <button type="button" onclick="checkQ19()">Submit</button>
-        </form>
-        <div id="result19"></div>
-    </div>
-    <script>
-        function checkQ19() {
-            var selected = document.querySelector('#q19 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result19');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The operations that are executed in kernel mode are usually the ones that deal with the I/O (disk, network), memory management, process isolation, and inter-process communication. In this case, computing a string\'s length (i.e., using strlen) does not require the user to switch to kernel mode.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The operations that are executed in kernel mode are usually the ones that deal with the I/O (disk, network), memory management, process isolation, and inter-process communication. In this case, computing a string\'s length (i.e., using strlen) does not require the user to switch to kernel mode.';
+        <div class="question">
+            <h2>Question 19: Which of the following operations is performed in user space?</h2>
+            <form id="q19">
+                <label><input type="radio" name="answer" value="a"> a. Writing a file on disk.</label>
+                <label><input type="radio" name="answer" value="b"> b. Computing a string\'s length.</label>
+                <label><input type="radio" name="answer" value="c"> c. Opening a file.</label>
+                <label><input type="radio" name="answer" value="d"> d. Swapping out a page.</label>
+                <button type="button" onclick="checkQ19()">Submit</button>
+            </form>
+            <div id="result19" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ19() {
+                var selected = document.querySelector('#q19 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result19');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The operations that are executed in kernel mode are usually the ones that deal with the I/O (disk, network), memory management, process isolation, and inter-process communication. In this case, computing a string\'s length (i.e., using strlen) does not require the user to switch to kernel mode.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The operations that are executed in kernel mode are usually the ones that deal with the I/O (disk, network), memory management, process isolation, and inter-process communication. In this case, computing a string\'s length (i.e., using strlen) does not require the user to switch to kernel mode.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 20: When are system calls required?</h2>
-        <form id="q20">
-            <label><input type="radio" name="answer" value="a"> a. When the system notifies the process that an event has happened.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. When performing privileged operations.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. When calling library functions.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. When copying strings.</label><br>
-            <button type="button" onclick="checkQ20()">Submit</button>
-        </form>
-        <div id="result20"></div>
-    </div>
-    <script>
-        function checkQ20() {
-            var selected = document.querySelector('#q20 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result20');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: System calls are a mechanism to switch context from the userspace to the kernel space in order to perform privileged operations. Most operations that may impact other parts of the system (e.g., memory allocation, reading and writing I/O data, creating a thread or a process) require system calls. Regular computations, function calls and memory access within the process, including libraries, do not require system calls.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: System calls are a mechanism to switch context from the userspace to the kernel space in order to perform privileged operations. Most operations that may impact other parts of the system (e.g., memory allocation, reading and writing I/O data, creating a thread or a process) require system calls. Regular computations, function calls and memory access within the process, including libraries, do not require system calls.';
+        <div class="question">
+            <h2>Question 20: When are system calls required?</h2>
+            <form id="q20">
+                <label><input type="radio" name="answer" value="a"> a. When the system notifies the process that an event has happened.</label>
+                <label><input type="radio" name="answer" value="b"> b. When performing privileged operations.</label>
+                <label><input type="radio" name="answer" value="c"> c. When calling library functions.</label>
+                <label><input type="radio" name="answer" value="d"> d. When copying strings.</label>
+                <button type="button" onclick="checkQ20()">Submit</button>
+            </form>
+            <div id="result20" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ20() {
+                var selected = document.querySelector('#q20 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result20');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: System calls are a mechanism to switch context from the userspace to the kernel space in order to perform privileged operations. Most operations that may impact other parts of the system (e.g., memory allocation, reading and writing I/O data, creating a thread or a process) require system calls. Regular computations, function calls and memory access within the process, including libraries, do not require system calls.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: System calls are a mechanism to switch context from the userspace to the kernel space in order to perform privileged operations. Most operations that may impact other parts of the system (e.g., memory allocation, reading and writing I/O data, creating a thread or a process) require system calls. Regular computations, function calls and memory access within the process, including libraries, do not require system calls.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 21: Why does printf buffer the strings instead of immediately displaying them (unless a new line is also printed)?</h2>
-        <form id="q21">
-            <label><input type="radio" name="answer" value="a"> a. To minimise the overhead caused by calling write multiple times.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. To reduce the number of times the standard output file is open.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. To minimise the overhead caused by calling read multiple times.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. To log the output messages in an internal log.</label><br>
-            <button type="button" onclick="checkQ21()">Submit</button>
-        </form>
-        <div id="result21"></div>
-    </div>
-    <script>
-        function checkQ21() {
-            var selected = document.querySelector('#q21 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result21');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: printf outputs the strings to the standard output using the stdout object. As opposed to the standard error, which is usually used to display error or debug messages, delaying the printing of output messages is considered acceptable. Because of this, the output is buffered to reduce the overhead caused by multiple write system calls.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: printf outputs the strings to the standard output using the stdout object. As opposed to the standard error, which is usually used to display error or debug messages, delaying the printing of output messages is considered acceptable. Because of this, the output is buffered to reduce the overhead caused by multiple write system calls.';
+        <div class="question">
+            <h2>Question 21: Why does printf buffer the strings instead of immediately displaying them (unless a new line is also printed)?</h2>
+            <form id="q21">
+                <label><input type="radio" name="answer" value="a"> a. To minimise the overhead caused by calling write multiple times.</label>
+                <label><input type="radio" name="answer" value="b"> b. To reduce the number of times the standard output file is open.</label>
+                <label><input type="radio" name="answer" value="c"> c. To minimise the overhead caused by calling read multiple times.</label>
+                <label><input type="radio" name="answer" value="d"> d. To log the output messages in an internal log.</label>
+                <button type="button" onclick="checkQ21()">Submit</button>
+            </form>
+            <div id="result21" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ21() {
+                var selected = document.querySelector('#q21 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result21');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: printf outputs the strings to the standard output using the stdout object. As opposed to the standard error, which is usually used to display error or debug messages, delaying the printing of output messages is considered acceptable. Because of this, the output is buffered to reduce the overhead caused by multiple write system calls.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: printf outputs the strings to the standard output using the stdout object. As opposed to the standard error, which is usually used to display error or debug messages, delaying the printing of output messages is considered acceptable. Because of this, the output is buffered to reduce the overhead caused by multiple write system calls.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 22: What are the permissions of the .text segment?</h2>
-        <form id="q22">
-            <label><input type="radio" name="answer" value="a"> a. r-</label><br>
-            <label><input type="radio" name="answer" value="b"> b. rw-</label><br>
-            <label><input type="radio" name="answer" value="c"> c. r-x</label><br>
-            <label><input type="radio" name="answer" value="d"> d. -wx</label><br>
-            <button type="button" onclick="checkQ22()">Submit</button>
-        </form>
-        <div id="result22"></div>
-    </div>
-    <script>
-        function checkQ22() {
-            var selected = document.querySelector('#q22 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result22');
-            if (selected && selected.value === 'c') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The .text segment contains the code of our program. In order to work with our code, the computer needs to be able to read and execute it.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c. Explanation: The .text segment contains the code of our program. In order to work with our code, the computer needs to be able to read and execute it.';
+        <div class="question">
+            <h2>Question 22: What are the permissions of the .text segment?</h2>
+            <form id="q22">
+                <label><input type="radio" name="answer" value="a"> a. r-</label>
+                <label><input type="radio" name="answer" value="b"> b. rw-</label>
+                <label><input type="radio" name="answer" value="c"> c. r-x</label>
+                <label><input type="radio" name="answer" value="d"> d. -wx</label>
+                <button type="button" onclick="checkQ22()">Submit</button>
+            </form>
+            <div id="result22" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ22() {
+                var selected = document.querySelector('#q22 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result22');
+                if (selected && selected.value === 'c') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The .text segment contains the code of our program. In order to work with our code, the computer needs to be able to read and execute it.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is c.<br><div class="explanation">Explanation: The .text segment contains the code of our program. In order to work with our code, the computer needs to be able to read and execute it.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 23: What are the permissions of the .bss segment?</h2>
-        <form id="q23">
-            <label><input type="radio" name="answer" value="a"> a. r-</label><br>
-            <label><input type="radio" name="answer" value="b"> b. rw-</label><br>
-            <label><input type="radio" name="answer" value="c"> c. rwx</label><br>
-            <label><input type="radio" name="answer" value="d"> d. -w-</label><br>
-            <button type="button" onclick="checkQ23()">Submit</button>
-        </form>
-        <div id="result23"></div>
-    </div>
-    <script>
-        function checkQ23() {
-            var selected = document.querySelector('#q23 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result23');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The .bss zone contains the uninitialized variables from our program, it is similar to the .data, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The .bss zone contains the uninitialized variables from our program, it is similar to the .data, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.';
+        <div class="question">
+            <h2>Question 23: What are the permissions of the .bss segment?</h2>
+            <form id="q23">
+                <label><input type="radio" name="answer" value="a"> a. r-</label>
+                <label><input type="radio" name="answer" value="b"> b. rw-</label>
+                <label><input type="radio" name="answer" value="c"> c. rwx</label>
+                <label><input type="radio" name="answer" value="d"> d. -w-</label>
+                <button type="button" onclick="checkQ23()">Submit</button>
+            </form>
+            <div id="result23" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ23() {
+                var selected = document.querySelector('#q23 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result23');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The .bss zone contains the uninitialized variables from our program, it is similar to the .data, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The .bss zone contains the uninitialized variables from our program, it is similar to the .data, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 24: What are the permissions of the .data segment?</h2>
-        <form id="q24">
-            <label><input type="radio" name="answer" value="a"> a. r-</label><br>
-            <label><input type="radio" name="answer" value="b"> b. rw-</label><br>
-            <label><input type="radio" name="answer" value="c"> c. rwx</label><br>
-            <label><input type="radio" name="answer" value="d"> d. -wx</label><br>
-            <button type="button" onclick="checkQ24()">Submit</button>
-        </form>
-        <div id="result24"></div>
-    </div>
-    <script>
-        function checkQ24() {
-            var selected = document.querySelector('#q24 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result24');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The .data zone contains the initialized variables from our program, it is similar to the .bss, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The .data zone contains the initialized variables from our program, it is similar to the .bss, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.';
+        <div class="question">
+            <h2>Question 24: What are the permissions of the .data segment?</h2>
+            <form id="q24">
+                <label><input type="radio" name="answer" value="a"> a. r-</label>
+                <label><input type="radio" name="answer" value="b"> b. rw-</label>
+                <label><input type="radio" name="answer" value="c"> c. rwx</label>
+                <label><input type="radio" name="answer" value="d"> d. -wx</label>
+                <button type="button" onclick="checkQ24()">Submit</button>
+            </form>
+            <div id="result24" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ24() {
+                var selected = document.querySelector('#q24 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result24');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The .data zone contains the initialized variables from our program, it is similar to the .bss, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The .data zone contains the initialized variables from our program, it is similar to the .bss, thus the permissions are rw-. The only difference between the two is how our program is stored in the executable. In order to work with these variables we need to be able to both read and write the information stored in the executable.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 25: How do we allocate a variable in the .stack section?</h2>
-        <form id="q25">
-            <label><input type="radio" name="answer" value="a"> a. We can, the .stack section is rebuilt with brk calls.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. We can\'t as they need to wait for the stack to be free.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. We can, as the stack is volatile.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. We can\'t, as the stack is volatile.</label><br>
-            <button type="button" onclick="checkQ25()">Submit</button>
-        </form>
-        <div id="result25"></div>
-    </div>
-    <script>
-        function checkQ25() {
-            var selected = document.querySelector('#q25 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result25');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The stack is a memory region, the stack frames are moved around during execution. This means that though we can\'t deallocate, we can\'t ensure that we will go out in the context they are needed.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: The stack is a memory region, the stack frames are moved around during execution. This means that though we can\'t deallocate, we can\'t ensure that we will go out in the context they are needed.';
+        <div class="question">
+            <h2>Question 25: How do we allocate a variable in the .stack section?</h2>
+            <form id="q25">
+                <label><input type="radio" name="answer" value="a"> a. We can, the .stack section is rebuilt with brk calls.</label>
+                <label><input type="radio" name="answer" value="b"> b. We can\'t as they need to wait for the stack to be free.</label>
+                <label><input type="radio" name="answer" value="c"> c. We can, as the stack is volatile.</label>
+                <label><input type="radio" name="answer" value="d"> d. We can\'t, as the stack is volatile.</label>
+                <button type="button" onclick="checkQ25()">Submit</button>
+            </form>
+            <div id="result25" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ25() {
+                var selected = document.querySelector('#q25 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result25');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The stack is a memory region, the stack frames are moved around during execution. This means that though we can\'t deallocate, we can\'t ensure that we will go out in the context they are needed.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: The stack is a memory region, the stack frames are moved around during execution. This means that though we can\'t deallocate, we can\'t ensure that we will go out in the context they are needed.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 26: Why is the .data segment not executable?</h2>
-        <form id="q26">
-            <label><input type="radio" name="answer" value="a"> a. The .data zone was randomly given execution permissions at runtime.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. The zone is read-only to have execution rights when the process starts.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. The zone is closed in the .bss region.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. The zone is read-only.</label><br>
-            <button type="button" onclick="checkQ26()">Submit</button>
-        </form>
-        <div id="result26"></div>
-    </div>
-    <script>
-        function checkQ26() {
-            var selected = document.querySelector('#q26 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result26');
-            if (selected && selected.value === 'd') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: If the .data zone is small, it sometimes gets merged with the .text by the compiler. This behavior is not consistent and should not be depended on. The .data is read-write but not executable to separate data from code.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d. Explanation: If the .data zone is small, it sometimes gets merged with the .text by the compiler. This behavior is not consistent and should not be depended on. The .data is read-write but not executable to separate data from code.';
+        <div class="question">
+            <h2>Question 26: Why is the .data segment not executable?</h2>
+            <form id="q26">
+                <label><input type="radio" name="answer" value="a"> a. The .data zone was randomly given execution permissions at runtime.</label>
+                <label><input type="radio" name="answer" value="b"> b. The zone is read-only to have execution rights when the process starts.</label>
+                <label><input type="radio" name="answer" value="c"> c. The zone is closed in the .bss region.</label>
+                <label><input type="radio" name="answer" value="d"> d. The zone is read-only.</label>
+                <button type="button" onclick="checkQ26()">Submit</button>
+            </form>
+            <div id="result26" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ26() {
+                var selected = document.querySelector('#q26 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result26');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: If the .data zone is small, it sometimes gets merged with the .text by the compiler. This behavior is not consistent and should not be depended on. The .data is read-write but not executable to separate data from code.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: If the .data zone is small, it sometimes gets merged with the .text by the compiler. This behavior is not consistent and should not be depended on. The .data is read-write but not executable to separate data from code.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 27: A running process will receive newly allocated memory pages not at memory allocation, but in time, depending on the accesses it performs during its execution. How is this technique called?</h2>
-        <form id="q27">
-            <label><input type="radio" name="answer" value="a"> a. Demand paging</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Page reservation</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Page mapping</label><br>
-            <label><input type="radio" name="answer" value="d"> d. Minor page fault</label><br>
-            <button type="button" onclick="checkQ27()">Submit</button>
-        </form>
-        <div id="result27"></div>
-    </div>
-    <script>
-        function checkQ27() {
-            var selected = document.querySelector('#q27 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result27');
-            if (selected && selected.value === 'a') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: When a process allocates memory, the memory is only reserved as virtual memory in the virtual address space. The memory allocation happens at the first write access on demand, not at the reserved moment. This will trigger a minor page fault. This technique is called demand paging since physical memory pages are allocated on demand when they were reserved.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a. Explanation: When a process allocates memory, the memory is only reserved as virtual memory in the virtual address space. The memory allocation happens at the first write access on demand, not at the reserved moment. This will trigger a minor page fault. This technique is called demand paging since physical memory pages are allocated on demand when they were reserved.';
+        <div class="question">
+            <h2>Question 27: A running process will receive newly allocated memory pages not at memory allocation, but in time, depending on the accesses it performs during its execution. How is this technique called?</h2>
+            <form id="q27">
+                <label><input type="radio" name="answer" value="a"> a. Demand paging</label>
+                <label><input type="radio" name="answer" value="b"> b. Page reservation</label>
+                <label><input type="radio" name="answer" value="c"> c. Page mapping</label>
+                <label><input type="radio" name="answer" value="d"> d. Minor page fault</label>
+                <button type="button" onclick="checkQ27()">Submit</button>
+            </form>
+            <div id="result27" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ27() {
+                var selected = document.querySelector('#q27 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result27');
+                if (selected && selected.value === 'a') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: When a process allocates memory, the memory is only reserved as virtual memory in the virtual address space. The memory allocation happens at the first write access on demand, not at the reserved moment. This will trigger a minor page fault. This technique is called demand paging since physical memory pages are allocated on demand when they were reserved.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is a.<br><div class="explanation">Explanation: When a process allocates memory, the memory is only reserved as virtual memory in the virtual address space. The memory allocation happens at the first write access on demand, not at the reserved moment. This will trigger a minor page fault. This technique is called demand paging since physical memory pages are allocated on demand when they were reserved.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 28: What is the role of the MMU?</h2>
-        <form id="q28">
-            <label><input type="radio" name="answer" value="a"> a. Guarantees coherent data is written to disk.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. Checks whether virtual addresses are valid.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. Handles reading/writing to disk.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. It is a software component of the OS.</label><br>
-            <button type="button" onclick="checkQ28()">Submit</button>
-        </form>
-        <div id="result28"></div>
-    </div>
-    <script>
-        function checkQ28() {
-            var selected = document.querySelector('#q28 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result28');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: The Memory Management Unit is a hardware component integrated into the CPU. It performs the translation from virtual addresses to physical addresses, or there is no entry in the virtual page table the MMU will trigger a page fault. If the virtual address is not valid, meaning that the permissions are not met.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: The Memory Management Unit is a hardware component integrated into the CPU. It performs the translation from virtual addresses to physical addresses, or there is no entry in the virtual page table the MMU will trigger a page fault. If the virtual address is not valid, meaning that the permissions are not met.';
+        <div class="question">
+            <h2>Question 28: What is the role of the MMU?</h2>
+            <form id="q28">
+                <label><input type="radio" name="answer" value="a"> a. Guarantees coherent data is written to disk.</label>
+                <label><input type="radio" name="answer" value="b"> b. Checks whether virtual addresses are valid.</label>
+                <label><input type="radio" name="answer" value="c"> c. Handles reading/writing to disk.</label>
+                <label><input type="radio" name="answer" value="d"> d. It is a software component of the OS.</label>
+                <button type="button" onclick="checkQ28()">Submit</button>
+            </form>
+            <div id="result28" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ28() {
+                var selected = document.querySelector('#q28 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result28');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The Memory Management Unit is a hardware component integrated into the CPU. It performs the translation from virtual addresses to physical addresses, or there is no entry in the virtual page table the MMU will trigger a page fault. If the virtual address is not valid, meaning that the permissions are not met.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: The Memory Management Unit is a hardware component integrated into the CPU. It performs the translation from virtual addresses to physical addresses, or there is no entry in the virtual page table the MMU will trigger a page fault. If the virtual address is not valid, meaning that the permissions are not met.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="question">
-        <h2>Question 29: How do cache misses influence our program?</h2>
-        <form id="q29">
-            <label><input type="radio" name="answer" value="a"> a. They lead to writing the wrong data.</label><br>
-            <label><input type="radio" name="answer" value="b"> b. They add latency to read/write operations.</label><br>
-            <label><input type="radio" name="answer" value="c"> c. They lead to reading the wrong data.</label><br>
-            <label><input type="radio" name="answer" value="d"> d. They corrupt our memory.</label><br>
-            <button type="button" onclick="checkQ29()">Submit</button>
-        </form>
-        <div id="result29"></div>
-    </div>
-    <script>
-        function checkQ29() {
-            var selected = document.querySelector('#q29 input[name="answer"]:checked');
-            var resultDiv = document.getElementById('result29');
-            if (selected && selected.value === 'b') {
-                resultDiv.innerHTML = '<span class="result">Correct!</span> Explanation: A cache miss implies that the data needs to be read/written from/to RAM. This results in additional CPU cycles wasted on reading/writing data, which could be used to continue the execution.';
-            } else {
-                resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b. Explanation: A cache miss implies that the data needs to be read/written from/to RAM. This results in additional CPU cycles wasted on reading/writing data, which could be used to continue the execution.';
+        <div class="question">
+            <h2>Question 29: How do cache misses influence our program?</h2>
+            <form id="q29">
+                <label><input type="radio" name="answer" value="a"> a. They lead to writing the wrong data.</label>
+                <label><input type="radio" name="answer" value="b"> b. They add latency to read/write operations.</label>
+                <label><input type="radio" name="answer" value="c"> c. They lead to reading the wrong data.</label>
+                <label><input type="radio" name="answer" value="d"> d. They corrupt our memory.</label>
+                <button type="button" onclick="checkQ29()">Submit</button>
+            </form>
+            <div id="result29" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ29() {
+                var selected = document.querySelector('#q29 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result29');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: A cache miss implies that the data needs to be read/written from/to RAM. This results in additional CPU cycles wasted on reading/writing data, which could be used to continue the execution.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: A cache miss implies that the data needs to be read/written from/to RAM. This results in additional CPU cycles wasted on reading/writing data, which could be used to continue the execution.</div>';
+                }
             }
-        }
-    </script>
+        </script>
 
+        <div class="question">
+            <h2>Question 30: What is the primary purpose of the page table in a virtual memory system?</h2>
+            <form id="q30">
+                <label><input type="radio" name="answer" value="a"> a. To keep track of free memory blocks</label>
+                <label><input type="radio" name="answer" value="b"> b. To maintain the cache of frequently accessed memory addresses</label>
+                <label><input type="radio" name="answer" value="c"> c. To store process state information</label>
+                <label><input type="radio" name="answer" value="d"> d. To map virtual addresses to physical addresses</label>
+                <button type="button" onclick="checkQ30()">Submit</button>
+            </form>
+            <div id="result30" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ30() {
+                var selected = document.querySelector('#q30 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result30');
+                if (selected && selected.value === 'd') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: The primary purpose of the page table is to map virtual addresses used by a process to the corresponding physical addresses in memory. This mapping is essential for implementing virtual memory. The other options relate to different functions within an operating system.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is d.<br><div class="explanation">Explanation: The primary purpose of the page table is to map virtual addresses used by a process to the corresponding physical addresses in memory. This mapping is essential for implementing virtual memory. The other options relate to different functions within an operating system.</div>';
+                }
+            }
+        </script>
+
+        <div class="question">
+            <h2>Question 31: What is a characteristic of the 'still reachable' section in Valgrind?</h2>
+            <form id="q31">
+                <label><input type="radio" name="answer" value="a"> a. It refers to the stack memory, which can't be freed with calls to free.</label>
+                <label><input type="radio" name="answer" value="b"> b. It refers to allocated memory that is still pointed to when the process finished.</label>
+                <label><input type="radio" name="answer" value="c"> c. It refers to memory lost after using the brk/sbrk calls directly.</label>
+                <label><input type="radio" name="answer" value="d"> d. It refers to allocated memory that is no longer pointed to.</label>
+                <button type="button" onclick="checkQ31()">Submit</button>
+            </form>
+            <div id="result31" class="result-box"></div>
+        </div>
+        <script>
+            function checkQ31() {
+                var selected = document.querySelector('#q31 input[name="answer"]:checked');
+                var resultDiv = document.getElementById('result31');
+                if (selected && selected.value === 'b') {
+                    resultDiv.innerHTML = '<span class="result">Correct!</span><br><div class="explanation">Explanation: \'still reachable\' refers to the idea that the process finished before the memory was freed. Thus, we could theoretically still reach that memory, if the program didn\'t stop.</div>';
+                } else {
+                    resultDiv.innerHTML = '<span class="incorrect">Incorrect.</span> The correct answer is b.<br><div class="explanation">Explanation: \'still reachable\' refers to the idea that the process finished before the memory was freed. Thus, we could theoretically still reach that memory, if the program didn\'t stop.</div>';
+                }
+            }
+        </script>
+
+    </div>
 </body>
 </html>
